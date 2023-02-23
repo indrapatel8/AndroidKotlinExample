@@ -2,21 +2,23 @@ package com.indra.dialogsdemo
 
 import android.app.ProgressDialog
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     lateinit var btnAlert: Button
     lateinit var alertDialog: AlertDialog
     lateinit var btnProgress: Button
     lateinit var pdialog: ProgressDialog;
+    lateinit var btnSimpleListDialog: Button
+    lateinit var listAlertDialog: AlertDialog
+    lateinit var loginAlertDialog: AlertDialog
+    lateinit var btnLoginDialog: Button
     var counter: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,24 @@ class MainActivity : AppCompatActivity() {
         btnProgress.setOnClickListener {
             openProgressDialog()
         }
+
+        btnSimpleListDialog = findViewById(R.id.btnSimpleListDialog)
+        btnSimpleListDialog.setOnClickListener {
+            listAlertDialog.show()
+        }
+        btnLoginDialog = findViewById(R.id.btnLoginDialog)
+        loginAlertDialog = AlertDialog.Builder(this).create()
+        var customView = this.layoutInflater.inflate(R.layout.logindialog,null)
+        var loginButton  = customView.findViewById<View>(R.id.btnLogin) as Button
+        loginButton.setOnClickListener {
+            Toast.makeText(this, "Haa, Custom Dialog avdi gayu", Toast.LENGTH_LONG).show()
+            loginAlertDialog.dismiss()
+        }
+        loginAlertDialog.setView(customView)
+        loginAlertDialog.setTitle("Signin")
+        btnLoginDialog.setOnClickListener {
+            loginAlertDialog.show()
+        }
     }
 
     fun openProgressDialog() {
@@ -45,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 pdialog.setTitle("Downloading..... " + counter + "/100%")
                 counter = counter + 10;
             }
+
             override fun onFinish() {
                 pdialog.dismiss()
             }
@@ -57,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         //Define Alert Dialog
         alertDialog = AlertDialog.Builder(this)
             .setPositiveButton("Yes,Ad.And",
-                DialogInterface.OnClickListener { dialog, id ->
+                { dialog, id ->
                     Toast.makeText(
                         this,
                         "Thanks for selection Advance Android...",
@@ -80,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         alertDialog.setButton(
             DialogInterface.BUTTON_POSITIVE,
             "BTN-Pos",
-            DialogInterface.OnClickListener { dia, id ->
+            { dia, id ->
                 Toast.makeText(this, "From Seperate Impl", Toast.LENGTH_LONG).show()
             })
         //alertDialog.create()
@@ -96,5 +117,35 @@ class MainActivity : AppCompatActivity() {
                 pdialog.dismiss()
             }
         )
+
+        createListDialog()
+
+    }
+
+
+    fun createListDialog() {
+        listAlertDialog = AlertDialog.Builder(this)
+            //Simple List Demo
+            /* .setItems(R.array.semesterList, { dialog, which ->
+                Toast.makeText(this, "Selection is : " + which, Toast.LENGTH_LONG).show()
+                dialog.dismiss()
+            })
+              */
+            //Radiobutton type list demo
+            /*
+        .setSingleChoiceItems(R.array.semesterList, 2,
+            { dialog, which ->
+                Toast.makeText(this, "Selection is : " + which, Toast.LENGTH_LONG).show()
+                dialog.dismiss()
+            })
+*/
+            .setMultiChoiceItems(R.array.semesterList, null,
+                { dialog, which, chkStatus ->
+                    Toast.makeText(this, "" + which + "::" + chkStatus, Toast.LENGTH_LONG).show()
+                }
+            )
+            .setTitle("Choose Your Semester")
+            .setCancelable(false)
+            .create()
     }
 }

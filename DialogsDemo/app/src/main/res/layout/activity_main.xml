@@ -40,4 +40,25 @@
         app:layout_constraintStart_toStartOf="@+id/btnAlert"
         app:layout_constraintTop_toBottomOf="@+id/btnAlert" />
 
+    <Button
+        android:id="@+id/btnSimpleListDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Simple List Dialog"
+        app:layout_constraintEnd_toEndOf="@+id/btnProgress"
+        app:layout_constraintStart_toStartOf="@+id/btnProgress"
+        app:layout_constraintTop_toBottomOf="@+id/btnProgress" />
+
+    <Button
+        android:id="@+id/btnLoginDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Custom Login Dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSimpleListDialog" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
