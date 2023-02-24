@@ -1,14 +1,20 @@
 package com.indra.dialogsdemo
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     lateinit var btnAlert: Button
@@ -19,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var listAlertDialog: AlertDialog
     lateinit var loginAlertDialog: AlertDialog
     lateinit var btnLoginDialog: Button
+    lateinit var btnDatePickerDialog: Button
+    lateinit var datePickerDialog: DatePickerDialog
     var counter: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +53,8 @@ class MainActivity : AppCompatActivity() {
         }
         btnLoginDialog = findViewById(R.id.btnLoginDialog)
         loginAlertDialog = AlertDialog.Builder(this).create()
-        var customView = this.layoutInflater.inflate(R.layout.logindialog,null)
-        var loginButton  = customView.findViewById<View>(R.id.btnLogin) as Button
+        var customView = this.layoutInflater.inflate(R.layout.logindialog, null)
+        var loginButton = customView.findViewById<View>(R.id.btnLogin) as Button
         loginButton.setOnClickListener {
             Toast.makeText(this, "Haa, Custom Dialog avdi gayu", Toast.LENGTH_LONG).show()
             loginAlertDialog.dismiss()
@@ -56,6 +64,12 @@ class MainActivity : AppCompatActivity() {
         btnLoginDialog.setOnClickListener {
             loginAlertDialog.show()
         }
+
+        btnDatePickerDialog = findViewById(R.id.btnDatePickerDialog)
+        btnDatePickerDialog.setOnClickListener {
+            datePickerDialog.show()
+        }
+
     }
 
     fun openProgressDialog() {
@@ -119,9 +133,37 @@ class MainActivity : AppCompatActivity() {
         )
 
         createListDialog()
+        createDatePickerDialog()
 
     }
 
+    private fun createDatePickerDialog() {
+        //var ld:LocalDate
+        datePickerDialog = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                //SimpleDateFormat : with this you can custmise different date format
+                Toast.makeText(this, "" + dayOfMonth + ":" + month + ":" + year, Toast.LENGTH_LONG)
+                    .show()
+            },
+            2023, 1, 20
+        )
+
+        datePickerDialog.setTitle("Select Your DoB")
+
+        val dateTime1 = LocalDateTime.of(2021, 3, 5, 6, 43, 14)
+        val minSecond = dateTime1.atZone(ZoneId.systemDefault()) // timezone
+            .toInstant() // Instant object
+            .toEpochMilli() // milliseconds
+
+        val dateTime2 = LocalDateTime.of(2023, 3, 5, 6, 43, 14)
+        val maxSecond = dateTime2.atZone(ZoneId.systemDefault()) // timezone
+            .toInstant() // Instant object
+            .toEpochMilli() // milliseconds
+
+        datePickerDialog.datePicker.minDate = minSecond
+        datePickerDialog.datePicker.maxDate = maxSecond
+    }
 
     fun createListDialog() {
         listAlertDialog = AlertDialog.Builder(this)
