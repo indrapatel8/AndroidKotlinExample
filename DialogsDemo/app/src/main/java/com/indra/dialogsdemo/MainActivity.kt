@@ -5,29 +5,26 @@ import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btnAlert: Button
-    lateinit var alertDialog: AlertDialog
-    lateinit var btnProgress: Button
-    lateinit var pdialog: ProgressDialog;
-    lateinit var btnSimpleListDialog: Button
-    lateinit var listAlertDialog: AlertDialog
-    lateinit var loginAlertDialog: AlertDialog
-    lateinit var btnLoginDialog: Button
-    lateinit var btnDatePickerDialog: Button
-    lateinit var datePickerDialog: DatePickerDialog
-    var counter: Int = 0;
+    private lateinit var btnAlert: Button
+    private lateinit var alertDialog: AlertDialog
+    private lateinit var btnProgress: Button
+    private lateinit var pdialog: ProgressDialog
+    private lateinit var btnSimpleListDialog: Button
+    private lateinit var listAlertDialog: AlertDialog
+    private lateinit var loginAlertDialog: AlertDialog
+    private lateinit var btnLoginDialog: Button
+    private lateinit var btnDatePickerDialog: Button
+    private lateinit var datePickerDialog: DatePickerDialog
+    private var counter: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         btnDatePickerDialog.setOnClickListener {
             datePickerDialog.show()
         }
-
     }
 
     fun openProgressDialog() {
@@ -92,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         //Define Alert Dialog
         alertDialog = AlertDialog.Builder(this)
             .setPositiveButton("Yes,Ad.And",
-                { dialog, id ->
+                { _, _ ->
                     Toast.makeText(
                         this,
                         "Thanks for selection Advance Android...",
@@ -101,23 +97,23 @@ class MainActivity : AppCompatActivity() {
                     //alertDialog.dismiss()
                 }
             )
-            .setNegativeButton("DMM", DialogInterface.OnClickListener { dialog, id ->
+            .setNegativeButton("DMM", DialogInterface.OnClickListener { _, _ ->
                 Toast.makeText(this, "Thanks for selection DMM / SEO...", Toast.LENGTH_LONG).show()
             })
-            .setNeutralButton("Cancel", DialogInterface.OnClickListener({ dialog, id ->
+            .setNeutralButton("Cancel", DialogInterface.OnClickListener { _, _ ->
                 Toast.makeText(this, "You can take your time for selection", Toast.LENGTH_LONG)
                     .show()
-            }))
+            })
             .create()
         alertDialog.setTitle("Popup Title")
         alertDialog.setMessage("Are you sure to study android today?????")
         alertDialog.setCancelable(false)
         alertDialog.setButton(
             DialogInterface.BUTTON_POSITIVE,
-            "BTN-Pos",
-            { dia, id ->
-                Toast.makeText(this, "From Seperate Impl", Toast.LENGTH_LONG).show()
-            })
+            "BTN-Pos"
+        ) { _, _ ->
+            Toast.makeText(this, "From Seperate Impl", Toast.LENGTH_LONG).show()
+        }
         //alertDialog.create()
 
         pdialog = ProgressDialog(this);
@@ -125,12 +121,11 @@ class MainActivity : AppCompatActivity() {
         pdialog.setMessage("It is taking longer time than usual...")
         pdialog.setCancelable(false)
         pdialog.setButton(ProgressDialog.BUTTON_NEUTRAL,
-            "Cancel",
-            DialogInterface.OnClickListener { dialog, which ->
-                Toast.makeText(this, "Rukk Gaya....", Toast.LENGTH_LONG).show()
-                pdialog.dismiss()
-            }
-        )
+            "Cancel"
+        ) { _, _ ->
+            Toast.makeText(this, "Rukk Gaya....", Toast.LENGTH_LONG).show()
+            pdialog.dismiss()
+        }
 
         createListDialog()
         createDatePickerDialog()
@@ -143,7 +138,7 @@ class MainActivity : AppCompatActivity() {
             this,
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 //SimpleDateFormat : with this you can custmise different date format
-                Toast.makeText(this, "" + dayOfMonth + ":" + month + ":" + year, Toast.LENGTH_LONG)
+                Toast.makeText(this, "$dayOfMonth:$month:$year", Toast.LENGTH_LONG)
                     .show()
             },
             2023, 1, 20
@@ -165,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         datePickerDialog.datePicker.maxDate = maxSecond
     }
 
-    fun createListDialog() {
+    private fun createListDialog() {
         listAlertDialog = AlertDialog.Builder(this)
             //Simple List Demo
             /* .setItems(R.array.semesterList, { dialog, which ->
@@ -181,11 +176,10 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             })
 */
-            .setMultiChoiceItems(R.array.semesterList, null,
-                { dialog, which, chkStatus ->
-                    Toast.makeText(this, "" + which + "::" + chkStatus, Toast.LENGTH_LONG).show()
-                }
-            )
+            .setMultiChoiceItems(R.array.semesterList, null
+            ) { _, which, chkStatus ->
+                Toast.makeText(this, "$which::$chkStatus", Toast.LENGTH_LONG).show()
+            }
             .setTitle("Choose Your Semester")
             .setCancelable(false)
             .create()
