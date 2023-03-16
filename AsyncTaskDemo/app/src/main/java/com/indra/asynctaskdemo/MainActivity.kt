@@ -51,14 +51,17 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: String?): String {
             Log.i("ISPP", "doInBackground Calling.....")
             while (step < 100) {
-                progressDialog.setMessage("Please wait " + step + "%")
                 TimeUnit.MILLISECONDS.sleep(100)
-                //or you can go for Thread.Sleep(ms)
-                //tvMessage.setText("Please wait "+step+"%")
                 step++
-                Log.i("ISPP", "step....." + step)
+                publishProgress(step);
             }
             return "SUCCESS"
+        }
+
+        override fun onProgressUpdate(vararg values: Int?) {
+            super.onProgressUpdate(*values)
+            progressDialog.setMessage("Please wait " + values[0] + "%")
+            Log.i("ISPP", "step....." + values[0])
         }
 
         override fun onPostExecute(result: String?) {
