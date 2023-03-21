@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         registerReceiver(myBroadcastReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
         registerReceiver(myBroadcastReceiver, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+
+        //sendBroadcast(Intent(this, myBroadCast::class.java))
     }
 
     override fun onStop() {
