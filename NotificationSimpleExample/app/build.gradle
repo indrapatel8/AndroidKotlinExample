@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.indra.service'
+    namespace 'com.indra.notificationexample'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.indra.service"
+        applicationId "com.indra.notificationexample"
         minSdk 26
         targetSdk 33
         versionCode 1
