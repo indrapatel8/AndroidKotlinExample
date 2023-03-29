@@ -18,7 +18,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context!!,
             "com.indra.alarmmanagerexample")
             .setSmallIcon(R.drawable.baseline_adb_24)
-            .setContentTitle("Alarm Manager - Activated")
+            .setContentTitle("Alarm Manager - Activated - Indra")
             .setContentText("Title Message of Alarm Notification")
             .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
