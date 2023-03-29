@@ -26,13 +26,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
 
         binding.apply {
             btnNotification.setOnClickListener {
                 Toast.makeText(this@MainActivity, "OK", Toast.LENGTH_LONG).show()
 
-                val intent = Intent(this@MainActivity, LauncherActivity::class.java)
+                val intent = Intent(this@MainActivity, MainActivity::class.java)
                 val pendingIntent = PendingIntent.getActivity(
                     this@MainActivity,
                     0,
@@ -50,15 +51,24 @@ class MainActivity : AppCompatActivity() {
                 notificationChannel.enableVibration(true)
                 notificationManager.createNotificationChannel(notificationChannel)
 
-
                 // adding action for activity
-                val activityActionIntent1 = Intent(application, ActionButton1::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
+                val activityActionIntent1 =
+                    Intent(application, ActionButton1::class.java)
+                        .apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                //  activityActionIntent1.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                //                activityActionIntent1.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 val activityActionPendingIntent1: PendingIntent =
-                    PendingIntent.getActivity(application, 0, activityActionIntent1, 0)
+                    PendingIntent.getActivity(
+                        application,
+                        0, activityActionIntent1, 0
+                    )
                 // adding action for activity
-                val activityActionIntent2 = Intent(application, ActionButton2::class.java).apply {
+
+
+                val activityActionIntent2 =
+                    Intent(application, ActionButton2::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
                 val activityActionPendingIntent2: PendingIntent =

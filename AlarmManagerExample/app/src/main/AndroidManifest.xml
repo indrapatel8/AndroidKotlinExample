@@ -9,24 +9,24 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NotificationButtonExample"
+        android:theme="@style/Theme.AlarmManagerExample"
         tools:targetApi="31">
         <activity
-            android:name=".ActionButton2"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".ActionButton1"
-            android:exported="true">
-        </activity>
+            android:name=".DestinationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_destination"
+            android:theme="@style/Theme.AlarmManagerExample.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

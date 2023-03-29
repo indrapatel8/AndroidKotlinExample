@@ -24,13 +24,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
 
         binding.apply {
             btnNotification.setOnClickListener {
                 Toast.makeText(this@MainActivity, "OK", Toast.LENGTH_LONG).show()
 
-                val intent = Intent(this@MainActivity, LauncherActivity::class.java)
+                val intent = Intent(this@MainActivity,
+                    LauncherActivity::class.java)
                 val pendingIntent = PendingIntent.getActivity(
                     this@MainActivity,
                     0,
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                             R.mipmap.ic_launcher
                         )
                     )
+                    .setAutoCancel(true)
                     .setContentIntent(pendingIntent)
                 notificationManager.notify(1234, builder.build())
             }
