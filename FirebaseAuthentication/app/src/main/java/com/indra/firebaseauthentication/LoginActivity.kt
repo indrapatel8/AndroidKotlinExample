@@ -6,10 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var tvRedirectSignUp: TextView
     lateinit var etEmail: EditText
     private lateinit var etPass: EditText
@@ -17,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Creating firebaseAuth object
     lateinit var auth: FirebaseAuth
+    lateinit var analytics : FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
         // initialising Firebase auth object
         auth = FirebaseAuth.getInstance()
 
+        // Obtain the FirebaseAnalytics instance.
+        analytics = Firebase.analytics
+
         checkLogginStatus()
 
         btnLogin.setOnClickListener {
@@ -40,10 +46,8 @@ class LoginActivity : AppCompatActivity() {
         tvRedirectSignUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
-            // using finish() to end the activity
             finish()
         }
-
     }
 
     private fun checkLogginStatus() {
@@ -56,9 +60,6 @@ class LoginActivity : AppCompatActivity() {
     private fun login() {
         val email = etEmail.text.toString()
         val pass = etPass.text.toString()
-        // calling signInWithEmailAndPassword(email, pass)
-        // function using Firebase auth object
-        // On successful response Display a Toast
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 Toast.makeText(this, "Successfully LoggedIn", Toast.LENGTH_SHORT).show()
@@ -68,5 +69,4 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Log In failed", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
