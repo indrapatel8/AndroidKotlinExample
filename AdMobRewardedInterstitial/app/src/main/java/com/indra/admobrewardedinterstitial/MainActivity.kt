@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onAdLoaded(rewardedInterstitialAd: RewardedInterstitialAd) {
                     super.onAdLoaded(rewardedInterstitialAd)
                     Log.i(TAG, "RewardedInterstitialAdLoadCallback::onAdLoaded::Success")
+                    Toast.makeText(this@MainActivity,"Congrats! Add is Loaded Success.",Toast.LENGTH_LONG).show()
                     mRewardedInterstitialAd = rewardedInterstitialAd
                 }
             }
